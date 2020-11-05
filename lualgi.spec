@@ -4,7 +4,7 @@
 #
 Name     : lualgi
 Version  : 0.9.2
-Release  : 3
+Release  : 4
 URL      : https://github.com/pavouk/lgi/archive/0.9.2.tar.gz
 Source0  : https://github.com/pavouk/lgi/archive/0.9.2.tar.gz
 Summary  : No detailed summary available
@@ -51,21 +51,31 @@ license components for the lualgi package.
 
 %prep
 %setup -q -n lgi-0.9.2
+cd %{_builddir}/lgi-0.9.2
 %patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1540942328
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1604609391
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 make  %{?_smp_mflags}
 
+
 %install
-export SOURCE_DATE_EPOCH=1540942328
+export SOURCE_DATE_EPOCH=1604609391
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/lualgi
-cp LICENSE %{buildroot}/usr/share/package-licenses/lualgi/LICENSE
+cp %{_builddir}/lgi-0.9.2/LICENSE %{buildroot}/usr/share/package-licenses/lualgi/fdbb7ca70122fb32e3790d71b2c890e047a0c41e
 %make_install
 
 %files
@@ -113,4 +123,4 @@ cp LICENSE %{buildroot}/usr/share/package-licenses/lualgi/LICENSE
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/lualgi/LICENSE
+/usr/share/package-licenses/lualgi/fdbb7ca70122fb32e3790d71b2c890e047a0c41e
