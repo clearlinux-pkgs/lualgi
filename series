@@ -1,1 +1,2 @@
 deal-with-hardcoded-path.patch
+0001-Fix-the-build-with-Lua-5.4.patch
